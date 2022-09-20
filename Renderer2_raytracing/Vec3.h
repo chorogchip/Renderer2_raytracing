@@ -14,9 +14,8 @@ public:
     double const &operator[](int i) const { return e[i]; }
 
     Vec3();
-    Vec3(double e0, double e1, double e2);
+    explicit Vec3(double e0, double e1, double e2);
 
-    Vec3 operator-() const;
     Vec3 &operator+=(Vec3 const &v);
     Vec3 &operator*=(double d);
     Vec3 &operator/=(double d);
@@ -26,11 +25,12 @@ public:
     Vec3 cross(Vec3 const &v);
     Vec3 &normalize();
 
-    Vec3 operator+(Vec3 const &v);
-    Vec3 operator-(Vec3 const &v);
-    Vec3 operator*(Vec3 const &v);
-    Vec3 operator*(double d);
-    Vec3 operator/(double d);
+    Vec3 operator-() const;
+    Vec3 operator+(Vec3 const &v) const;
+    Vec3 operator-(Vec3 const &v) const;
+    Vec3 operator*(Vec3 const &v) const;
+    Vec3 operator*(double d) const;
+    Vec3 operator/(double d) const;
 };
 
 std::ostream& operator<<(std::ostream& out, Vec3 const& v);

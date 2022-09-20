@@ -7,9 +7,6 @@ Vec3::Vec3(double e0, double e1, double e2):
     e{e0, e1, e2}
 {}
 
-Vec3 Vec3::operator-() const {
-    return Vec3(-e[0], -e[1], -e[2]);
-}
 Vec3& Vec3::operator+=(Vec3 const& v) {
     e[0] += v.e[0];
     e[1] += v.e[1];
@@ -48,19 +45,22 @@ Vec3& Vec3::normalize() {
     return *this;
 }
 
-Vec3 Vec3::operator+(Vec3 const& v) {
+Vec3 Vec3::operator-() const {
+    return Vec3(-e[0], -e[1], -e[2]);
+}
+Vec3 Vec3::operator+(Vec3 const& v) const {
     return Vec3{ e[0] + v.e[0], e[1] + v.e[1], e[2] + v.e[2] };
 }
-Vec3 Vec3::operator-(Vec3 const &v) {
+Vec3 Vec3::operator-(Vec3 const &v) const {
     return Vec3{ e[0] - v.e[0], e[1] - v.e[1], e[2] - v.e[2] };
 }
-Vec3 Vec3::operator*(Vec3 const &v) {
+Vec3 Vec3::operator*(Vec3 const &v) const {
     return Vec3{ e[0] * v.e[0], e[1] * v.e[1], e[2] * v.e[2] };
 }
-Vec3 Vec3::operator*(double d) {
+Vec3 Vec3::operator*(double d) const {
     return Vec3{ e[0] * d, e[1] * d, e[2] * d };
 }
-Vec3 Vec3::operator/(double d) {
+Vec3 Vec3::operator/(double d) const {
     return Vec3{ e[0] / d, e[1] / d, e[2] / d };
 }
 
