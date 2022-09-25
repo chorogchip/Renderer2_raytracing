@@ -21,9 +21,14 @@ public:
     Vec3 &operator/=(double d);
     double length_squared() const;
     double length() const;
-    double dot(Vec3 const &v);
-    Vec3 cross(Vec3 const &v);
+    double dot(Vec3 const &v) const;
+    Vec3 cross(Vec3 const &v) const;
     Vec3 &normalize();
+    Vec3 sqrt() const;
+    Vec3 &make_sqrt();
+    bool is_near_zero() const;
+    Vec3 reflect(Vec3 const& n) const;
+    Vec3 refract(Vec3 const &normal, double etai_over_etat) const;
 
     Vec3 operator-() const;
     Vec3 operator+(Vec3 const &v) const;

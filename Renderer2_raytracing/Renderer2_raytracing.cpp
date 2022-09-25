@@ -1,8 +1,10 @@
 ﻿#include <iostream>
 
-#include "Vec3.h"
-#include "PPM_Exporter.h"
+#include "Tests.h"
 
 int main() {
-    PPM_Exporter::test1();
+    std::cout.sync_with_stdio(false);
+    std::cin.tie(nullptr);
+    std::cout.tie(nullptr);
+    Tests::test10_final();
 }

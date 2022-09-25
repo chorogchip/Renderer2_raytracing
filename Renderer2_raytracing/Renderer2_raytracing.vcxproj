@@ -104,6 +104,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -118,6 +119,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -127,14 +129,26 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Material.cpp" />
+    <ClCompile Include="Utils.cpp" />
+    <ClCompile Include="Utils.h" />
+    <ClCompile Include="HittableList.cpp" />
+    <ClCompile Include="Hittable.cpp" />
     <ClCompile Include="PPM_Exporter.cpp" />
     <ClCompile Include="Ray.cpp" />
     <ClCompile Include="Renderer2_raytracing.cpp" />
+    <ClCompile Include="Tests.cpp" />
     <ClCompile Include="Vec3.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Camera.h" />
+    <ClInclude Include="HittableList.h" />
+    <ClInclude Include="Hittable.h" />
+    <ClInclude Include="Material.h" />
     <ClInclude Include="PPM_Exporter.h" />
     <ClInclude Include="Ray.h" />
+    <ClInclude Include="Tests.h" />
     <ClInclude Include="Vec3.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
