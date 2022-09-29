@@ -2,11 +2,13 @@
 
 #include "Vec3.h"
 #include "Ray.h"
+#include "AABB.h"
 #include "Material.h"
 
 class Hittable {
 public:
     virtual bool hit(Ray const &r, double t_min, double t_max, HitRecord &rec) const = 0;
+    virtual bool bounding_box(double time0, double time1, AABB &output_box) const;
 };
 
 class HittableSphere : public Hittable {
@@ -34,5 +36,6 @@ public:
                          double radius, std::shared_ptr<Material> material);
 
     virtual bool hit(Ray const &r, double t_min, double t_max, HitRecord &rec) const override;
+    virtual bool bounding_box(double time0, double time1, AABB &output_box) const override;
     Point3 center(double time) const;
 };

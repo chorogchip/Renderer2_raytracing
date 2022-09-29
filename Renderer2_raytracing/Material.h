@@ -41,3 +41,12 @@ public:
 private:
     static double reflectance(double cosine, double ref_idx);
 };
+class MaterialLambertianTime : public Material {
+public:
+    Color albedo;
+
+    MaterialLambertianTime(Color const &color);
+
+    virtual bool scatter(Ray const &r_in, HitRecord const &rec,
+                         Color &attenuation, Ray &scattered) const override;
+};

@@ -129,6 +129,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AABB.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="Utils.cpp" />
@@ -142,6 +143,7 @@
     <ClCompile Include="Vec3.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AABB.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="HittableList.h" />
     <ClInclude Include="Hittable.h" />

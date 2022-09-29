@@ -38,5 +38,7 @@ public:
 
     static void test10_final();
 
+    static void test11_time();
+
 };
 

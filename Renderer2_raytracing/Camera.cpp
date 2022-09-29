@@ -85,3 +85,11 @@ Camera::Camera(Point3 look_from, Point3 look_at, Vec3 v_up, double fov_y_degree,
     this->time0 = _time0;
     this->time1 = _time1;
 }
+
+Ray Camera::get_ray_time(double s, double t) const {
+    Vec3 rd{lens_radius * util_rand::random_vector_in_unit_disk()};
+    Vec3 offset{this->u * rd.x() + this->v * rd.y()};
+
+    return Ray{this->origin + offset, this->lower_left_corner
+        + s * this->horizontal + t * this->vertical - this->origin - offset, util_rand::random_double(time0, time1)};
+}

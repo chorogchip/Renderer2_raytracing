@@ -60,3 +60,16 @@ double MaterialDielectric::reflectance(double cosine, double ref_idx) {
     r0 = r0 * r0;
     return r0 + (1.0 - r0) * std::pow((1.0 - cosine), 5.0);
 }
+
+MaterialLambertianTime::MaterialLambertianTime(Color const &color):
+    albedo{color}
+{}
+bool MaterialLambertianTime::scatter(Ray const& r_in, HitRecord const& rec,
+                                 Color& attenuation, Ray& scattered) const {
+    Vec3 scatter_direction = rec.normal + util_rand::random_unit_vector();
+    if (scatter_direction.is_near_zero())
+        scatter_direction = rec.normal;
+    scattered = Ray{rec.point, scatter_direction, r_in.tm};
+    attenuation = albedo;
+    return true;
+}

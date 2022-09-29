@@ -6,5 +6,5 @@ int main() {
     std::cout.sync_with_stdio(false);
     std::cin.tie(nullptr);
     std::cout.tie(nullptr);
-    Tests::test10_final();
+    Tests::test11_time();
 }

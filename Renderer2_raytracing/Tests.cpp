@@ -470,6 +470,7 @@ void Tests::test9_cam_defocus() {
 
     std::cerr << "\nDone.\n";
 }
+
 void Tests::test10_final() {
 
     // Image
@@ -545,6 +546,90 @@ void Tests::test10_final() {
                 double v = (static_cast<double>(j) + util_rand::random_double())
                     / static_cast<double>(image_height-1);
                 Ray r = cam.get_ray_defocus(u, v);
+                pixel_color += ray5_reflect(r, world, max_depth);
+            }
+            PPM_Exporter::write_color2_antialiasing(std::cout, pixel_color, samples_per_pixel);
+        }
+    }
+
+    std::cerr << "\nDone.\n";
+}
+void Tests::test11_time() {
+
+    // Image
+    double const aspect_ratio = 16.0 / 9.0;
+    int const image_width = 400;
+    int const image_height = static_cast<int>(
+        static_cast<double>(image_width) / aspect_ratio);
+    int const samples_per_pixel = 25;
+    int const max_depth = 50;
+
+    // World
+    HittableList world;
+
+    auto ground_material = make_shared<MaterialLambertian>(Color(0.5, 0.5, 0.5));
+    world.add(make_shared<HittableSphere>(Point3(0,-1000,0), 1000, ground_material));
+
+    for (int a = -11; a < 11; a++) {
+        for (int b = -11; b < 11; b++) {
+            auto choose_mat = util_rand::random_double();
+            Point3 center(a + 0.9*util_rand::random_double(), 0.2, b + 0.9*util_rand::random_double());
+
+            if ((center - Point3(4, 0.2, 0)).length() > 0.9) {
+                shared_ptr<Material> sphere_material;
+
+                if (choose_mat < 0.8) {
+                    // diffuse
+                    auto albedo = util_rand::random_unit_vector() * util_rand::random_unit_vector();
+                    auto center2 = center + Vec3{0.0, util_rand::random_double(0.0, 0.5), 0.0};
+                    sphere_material = make_shared<MaterialLambertianTime>(albedo);
+                    world.add(make_shared<HittableSphereMoving>(center, center2, 0.0, 1.0, 0.2, sphere_material));
+                } else if (choose_mat < 0.95) {
+                    // metal
+                    auto albedo = util_rand::random_unit_vector(0.5, 1.0);  //Color::random(0.5, 1);
+                    auto fuzz = util_rand::random_double(0, 0.5);
+                    sphere_material = make_shared<MaterialMetal>(albedo, fuzz);
+                    world.add(make_shared<HittableSphere>(center, 0.2, sphere_material));
+                } else {
+                    // glass
+                    sphere_material = make_shared<MaterialDielectric>(1.5);
+                    world.add(make_shared<HittableSphere>(center, 0.2, sphere_material));
+                }
+            }
+        }
+    }
+
+    auto material1 = make_shared<MaterialDielectric>(1.5);
+    world.add(make_shared<HittableSphere>(Point3(0, 1, 0), 1.0, material1));
+
+    auto material2 = make_shared<MaterialLambertian>(Color(0.4, 0.2, 0.1));
+    world.add(make_shared<HittableSphere>(Point3(-4, 1, 0), 1.0, material2));
+
+    auto material3 = make_shared<MaterialMetal>(Color(0.7, 0.6, 0.5), 0.0);
+    world.add(make_shared<HittableSphere>(Point3(4, 1, 0), 1.0, material3));
+
+    Point3 look_from{13.0, 2.0, 3.0};
+    Point3 look_at{0.0, 0.0, 0.0};
+    Vec3 v_up{0.0, 1.0, 0.0};
+    double dist_to_focus = 10.0;
+    double aperture = 0.1;
+
+    Camera cam{look_from, look_at, v_up, 20.0, aspect_ratio, aperture, dist_to_focus, 0.0, 1.0};
+
+
+    // Render
+    std::cout << "P3\n" << image_width << ' ' << image_height << "\n255\n";
+
+    for (int j = image_height - 1; j >= 0; --j) {
+        std::cerr << "\rScanlines remaining: " << j << ' ' << std::flush;
+        for (int i = 0; i < image_width; ++i) {
+            Color pixel_color{0.0, 0.0, 0.0};
+            for (int s = 0; s < samples_per_pixel; ++s) {
+                double u = (static_cast<double>(i) + util_rand::random_double())
+                    / static_cast<double>(image_width-1);
+                double v = (static_cast<double>(j) + util_rand::random_double())
+                    / static_cast<double>(image_height-1);
+                Ray r = cam.get_ray_time(u, v);
                 pixel_color += ray5_reflect(r, world, max_depth);
             }
             PPM_Exporter::write_color2_antialiasing(std::cout, pixel_color, samples_per_pixel);

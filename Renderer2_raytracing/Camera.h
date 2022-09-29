@@ -24,6 +24,7 @@ public:
 
     Ray get_ray(double u, double v) const;
     Ray get_ray_defocus(double s, double t) const;
+    Ray get_ray_time(double s, double t) const;
 
 };
 
